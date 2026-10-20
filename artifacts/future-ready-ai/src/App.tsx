@@ -5,6 +5,7 @@ import { ErrorBoundary } from '@/components/error-boundary';
 import { Form } from '@/components/ui/form';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import { compareSkills } from '@/lib/skill-comparison';
 import NotFound from '@/pages/not-found';
 import { Link, Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
 import {
@@ -31,6 +32,7 @@ const navItems: { href: string; label: string; icon: LucideIcon }[] = [
   { href: '/', label: 'Home overview', icon: Compass },
   { href: '/skills', label: 'My Skills Profile', icon: UserRound },
   { href: '/radar', label: 'Future Skills Radar', icon: Radar },
+  { href: '/comparison', label: 'Profile comparison', icon: Check },
   { href: '/careers', label: 'Career Matches', icon: BriefcaseBusiness },
   { href: '/roadmap', label: 'My Learning Roadmap', icon: RouteIcon },
   { href: '/scenarios', label: 'AI Scenario Comparison', icon: Lightbulb },
@@ -215,13 +217,110 @@ function RadarPage() {
         <div className="w-11 h-11 grid place-items-center rounded-xl bg-[hsl(var(--secondary))] text-[hsl(var(--primary))] mb-4"><Sparkles size={21}/></div>
         <div className="eyebrow">Read the radar wisely</div><h2 className="text-[24px] leading-tight mt-2">A prompt for reflection, not a ranking of your worth.</h2>
         <p className="text-[13px] text-[hsl(var(--muted-foreground))] leading-relaxed">The numbers are invented for this demo. Real opportunity varies by region, industry, access, and time. Think about which skill you would enjoy practicing—and what evidence would make you curious.</p>
-        <Link href="/skills" className="button-primary mt-2" data-testid="button-radar-profile">Compare with my profile <ArrowRight size={14}/></Link>
+        <Link href="/comparison" className="button-primary mt-2" data-testid="button-radar-profile">Compare with my profile <ArrowRight size={14}/></Link>
       </section>
     </div>
     <section className="mt-6">
       <div className="eyebrow mb-3">Transferable ways of working</div>
       <div className="flex flex-wrap gap-2">{['Ask better questions', 'Explain your reasoning', 'Check AI-generated work', 'Collaborate across disciplines', 'Keep learning in public'].map((tag, i) => <span className="badge !text-[11px] !px-3 !py-2" key={tag} data-testid={`tag-transferable-${i}`}>{tag}</span>)}</div>
     </section>
+  </main>;
+}
+
+function SkillComparisonPage({ profile }: { profile: Profile }) {
+  const savedSkills = profile.skills.filter((skill) => skill.name.trim());
+  const comparisons = compareSkills(savedSkills, radarSkills);
+
+  return <main className="page-content">
+    <PageHeader
+      eyebrow="Compare your saved skills"
+      title="Profile comparison"
+      description="See which Future Skills Radar examples are listed in your saved profile, along with the proficiency level you entered."
+    />
+    <SyntheticNote/>
+
+    {savedSkills.length === 0 ? (
+      <section className="card mt-5" data-testid="comparison-empty">
+        <div className="eyebrow">No skills to compare yet</div>
+        <h2 className="text-[24px] mt-2">Add a skill to your profile first.</h2>
+        <p className="text-[13px] text-[hsl(var(--muted-foreground))] leading-relaxed">
+          Enter at least one skill name and save your profile to see a comparison. A skill marked “Not provided” is simply not listed in your profile; it does not mean you lack that ability.
+        </p>
+        <Link href="/skills" className="button-primary mt-2" data-testid="button-comparison-complete-profile">
+          Complete my profile <ArrowRight size={14}/>
+        </Link>
+      </section>
+    ) : (
+      <>
+        <section className="card mt-5" data-testid="comparison-profile-summary">
+          <div className="flex flex-wrap justify-between items-start gap-3">
+            <div>
+              <div className="eyebrow">Saved profile</div>
+              <h2 className="text-[20px] mt-2 mb-1">{savedSkills.length} skill{savedSkills.length === 1 ? '' : 's'} listed</h2>
+            </div>
+            <Link href="/skills" className="button-secondary" data-testid="link-comparison-edit-profile">
+              Edit my profile <ArrowRight size={14}/>
+            </Link>
+          </div>
+          <div className="flex flex-wrap gap-2 mt-4">
+            {savedSkills.map((skill, index) => (
+              <span className="badge" key={`${skill.name}-${index}`} data-testid={`comparison-profile-skill-${index}`}>
+                {skill.name} · {skill.level || 'Proficiency not provided'}
+              </span>
+            ))}
+          </div>
+        </section>
+
+        <section className="card card-muted mt-5" data-testid="comparison-rules">
+          <div className="eyebrow">How to read this comparison</div>
+          <h2 className="text-[21px] mt-2 mb-3">Simple profile matching, not a career prediction.</h2>
+          <ul className="pl-5 text-[12px] leading-[1.8] text-[hsl(var(--muted-foreground))]">
+            <li>Names match when the wording is the same; capitalization and extra spaces are ignored. Synonyms are not guessed.</li>
+            <li>“Not provided” means the skill name is not in your saved profile. It does not mean you lack the skill.</li>
+            <li>For a listed skill, Exploring or Growing is flagged “Yes — practice may help.” Confident or Advanced is not flagged. Missing or unrecognized proficiency is “Not assessed.”</li>
+            <li>If the same skill appears more than once, the highest recognized proficiency is used.</li>
+          </ul>
+          <p className="text-[11px] leading-relaxed mb-0">
+            These are basic organizing rules, not a scientifically validated assessment. Radar indices and growth directions remain synthetic examples, not real-world demand data.
+          </p>
+        </section>
+
+        <section className="mt-5 grid gap-3" aria-label="Skill comparison results">
+          {comparisons.map((comparison, index) => (
+            <article className="card comparison-card" key={comparison.radarSkill.name} data-testid={`comparison-row-${index}`}>
+              <div>
+                <div className="eyebrow">Radar skill</div>
+                <h2 className="text-[20px] mt-2 mb-2">{comparison.radarSkill.name}</h2>
+                <span className="badge">{comparison.radarSkill.direction} example</span>
+                <p className="text-[11px] text-[hsl(var(--muted-foreground))] mt-3 mb-0" data-testid={`comparison-synthetic-index-${index}`}>
+                  Synthetic sample index: {comparison.radarSkill.demand}/100
+                </p>
+              </div>
+              <div className="comparison-facts">
+                <div className="comparison-fact">
+                  <div className="comparison-fact-label">Skill in profile?</div>
+                  <div className="comparison-fact-value" data-testid={`comparison-presence-${index}`}>
+                    {comparison.hasProfileSkill ? 'Provided' : 'Not provided'}
+                  </div>
+                </div>
+                <div className="comparison-fact">
+                  <div className="comparison-fact-label">Your proficiency</div>
+                  <div className="comparison-fact-value" data-testid={`comparison-proficiency-${index}`}>
+                    {comparison.proficiency}
+                  </div>
+                </div>
+                <div className="comparison-fact">
+                  <div className="comparison-fact-label">Needs improvement?</div>
+                  <div className="comparison-fact-value" data-testid={`comparison-improvement-${index}`}>
+                    {comparison.needsImprovement}
+                  </div>
+                </div>
+              </div>
+            </article>
+          ))}
+        </section>
+      </>
+    )}
   </main>;
 }
 
@@ -356,6 +455,7 @@ function Router({ profile, onSave }: { profile: Profile; onSave: (profile: Profi
       <Route path="/"><HomePage profile={profile}/></Route>
       <Route path="/skills"><SkillsPage profile={profile} onSave={onSave}/></Route>
       <Route path="/radar"><RadarPage/></Route>
+      <Route path="/comparison"><SkillComparisonPage profile={profile}/></Route>
       <Route path="/careers"><CareersPage/></Route>
       <Route path="/roadmap"><RoadmapPage/></Route>
       <Route path="/scenarios"><ScenariosPage/></Route>

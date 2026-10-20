@@ -26,6 +26,7 @@ FutureReady AI is a beginner-friendly career exploration dashboard with a locall
 ## Where things live
 
 - `artifacts/future-ready-ai/src/App.tsx` — app routes, shared navigation, six page views, and synthetic sample content
+- `artifacts/future-ready-ai/src/lib/skill-comparison.ts` — exact-name skill comparison and practice-flag rules
 - `artifacts/future-ready-ai/src/index.css` — shared theme, layout, and responsive styles
 - `artifacts/future-ready-ai/package.json` — app commands and dependencies
 
@@ -33,10 +34,11 @@ FutureReady AI is a beginner-friendly career exploration dashboard with a locall
 
 - The first version is frontend-only. The skills profile is saved in the browser with localStorage; no login, database, API key, or external service is needed.
 - Career scores, skill trends, recommendations, learning estimates, and AI-adoption comparisons are synthetic examples, not verified forecasts or labor-market statistics.
+- Profile comparison ignores capitalization and repeated spaces, but does not guess synonyms; low proficiency flags are simple organizing rules, not a validated assessment.
 
 ## Product
 
-The app helps users explore a skills profile, illustrative future skill trends, career matches, an example learning roadmap, and moderate versus fast AI-adoption scenarios.
+The app helps users explore a skills profile, compare saved skills with illustrative future skill trends, browse career matches, follow an example learning roadmap, and compare moderate versus fast AI-adoption scenarios.
 
 ## User preferences
 
