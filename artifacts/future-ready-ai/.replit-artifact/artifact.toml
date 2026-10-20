@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "FutureReady AI"
+description = "A career exploration dashboard for students, graduates, and working adults to explore future-facing roles, skills, learning paths, and AI adoption scenarios. Includes a locally saved skills profile and clearly labeled synthetic sample insights."
+version = "1.0.0"
+id = "artifacts/future-ready-ai"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21019
+
+[services.development]
+run = "pnpm --filter @workspace/future-ready-ai run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/future-ready-ai", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/future-ready-ai/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21019"
+BASE_PATH = "/"

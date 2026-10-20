@@ -1,9 +1,12 @@
-# [Project name]
+# FutureReady AI
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+FutureReady AI is a beginner-friendly career exploration dashboard with a locally saved skills profile and clearly labeled synthetic examples.
 
 ## Run & Operate
 
+- `pnpm --filter @workspace/future-ready-ai run dev` — run the FutureReady AI web app
+- `pnpm --filter @workspace/future-ready-ai run typecheck` — check the web app's TypeScript
+- `pnpm --filter @workspace/future-ready-ai run build` — create a production build
 - `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
@@ -22,19 +25,23 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/future-ready-ai/src/App.tsx` — app routes, shared navigation, six page views, and synthetic sample content
+- `artifacts/future-ready-ai/src/index.css` — shared theme, layout, and responsive styles
+- `artifacts/future-ready-ai/package.json` — app commands and dependencies
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- The first version is frontend-only. The skills profile is saved in the browser with localStorage; no login, database, API key, or external service is needed.
+- Career scores, skill trends, recommendations, learning estimates, and AI-adoption comparisons are synthetic examples, not verified forecasts or labor-market statistics.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+The app helps users explore a skills profile, illustrative future skill trends, career matches, an example learning roadmap, and moderate versus fast AI-adoption scenarios.
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- Keep the first version simple enough for programming beginners to understand and maintain.
+- Use clearly labeled synthetic sample data; do not present sample trends, job statistics, or recommendations as verified facts.
 
 ## Gotchas
 
