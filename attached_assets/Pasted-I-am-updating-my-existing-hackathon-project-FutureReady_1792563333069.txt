@@ -1,0 +1,55 @@
+I am updating my existing hackathon project, FutureReady AI, for Aiversecity Future-Ready Workforce Domain 1.
+
+IMPORTANT: Modify the existing project instead of creating a new project from scratch. First inspect the current code, routing, components, data structures, profile form, persistence logic, and styles. Keep the current visual design where appropriate. Do not claim a feature works unless you have implemented and tested it.
+
+PROJECT SCOPE
+Target users: IT graduates, including fresh IT graduates, graduates who have not yet found a job, and graduates who want to move into a different IT career.
+
+The product helps users move from their current skills to suitable future IT careers through explainable career matching, skill-gap analysis, personalized learning pathways, evidence-backed AI/job-market trends, SDG mapping, and future scenarios.
+
+NAVIGATION CHANGES
+Remove the standalone Future Skills Radar page and its sidebar/navigation item. Do not remove the required AI/job-market trend functionality. Replace the Radar page with a new standalone SDG Mapping page.
+
+Keep exactly these six main pages:
+1. Home
+2. My Skills Profile
+3. Career Matches
+4. My Learning Roadmap
+5. SDG Mapping
+6. AI Trends & Scenarios
+
+Update all links, routes, sidebar items, buttons, breadcrumbs, and navigation so there are no broken links to the removed Radar page. Reuse existing components and styling when possible.
+
+MUST-HAVE 1: IT GRADUATE SKILLS PROFILE
+Create or improve a functional form for the user's education/background, interests, target career, and IT skills.
+Use beginner/intermediate/advanced levels, with a clear numeric mapping if required by the matching algorithm.
+Allow users to save, edit, and reload their profile. Reuse the existing persistence method if suitable.
+Handle missing skills as "Not provided"; do not silently treat missing values as zero.
+Use only fictional/synthetic example profiles. Do not request or store real CVs or real sensitive personal data for the demo.
+
+MUST-HAVE 2: UPDATABLE AI AND JOB-MARKET TREND SIGNALS
+Move the current trend/radar functionality into the AI Trends & Scenarios page.
+Do not present hard-coded sample scores as real market facts.
+Implement at least one practical, updatable public source of AI/job-market signals. First inspect whether the project already has a backend or server-side API route.
+Use a suitable public news/research feed or public/open job-market dataset/API that can be accessed reliably without paid credentials. If a live source needs a backend request, implement it server-side when supported and handle failures gracefully.
+Show the source name, source URL, publication date when available, and retrieval/last-updated date. Provide a manual refresh button if practical.
+Display the evidence/headline and explain how it relates to an IT skill or career.
+Clearly distinguish observed signals, external forecasts, and our own estimates.
+Do not fabricate data, dates, statistics, job postings, or trend directions.
+If a live source is unavailable, show a clear error/last successful update and a labelled synthetic demo fallback. Never present fallback data as live data.
+Changing the underlying trend data should affect the relevant trend summary or scenario output in a transparent, explainable way.
+
+MUST-HAVE 3: EXPLAINABLE FUTURE-ROLE MATCHING
+Support a manageable initial catalogue of five IT careers:
+- Software Developer
+- Data Analyst
+- Cybersecurity Analyst
+- Cloud/Network Engineer
+- AI/Machine Learning Engineer
+
+Treat these as candidate careers, not claims that all are currently growing.
+Each career must have documented required skills, skill levels, descriptions, and sources.
+Calculate a transparent match score using a documented formula based on the user's provided skills and career requirements.
+Show matching skills, gaps, missing/unprovided skills, the reason for the score, and source links for career/skill requirements.
+Do not describe a match score as the probability of getting a job.
+Changing the user's profile must change the scores and rankings.

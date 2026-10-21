@@ -1,0 +1,143 @@
+export type LearningResource = {
+  id: string;
+  name: string;
+  url: string;
+  provider: string;
+  cost: string;
+  duration: string;
+  checkedDate: string;
+  careerIds: string[];
+  skillIds: string[];
+  reason: string;
+  accessNote?: string;
+};
+
+export const learningResources: LearningResource[] = [
+  {
+    id: 'kaggle-python',
+    name: 'Kaggle Learn: Python',
+    url: 'https://www.kaggle.com/learn/python',
+    provider: 'Kaggle Learn',
+    cost: 'Free (listed in the supplied resource CSV)',
+    duration: 'About 5 hours (course page)',
+    checkedDate: '21 Oct 2026',
+    careerIds: ['software-developer', 'cloud-network-engineer', 'ai-ml-engineer'],
+    skillIds: ['programming', 'problem-solving', 'debugging', 'automation-scripting', 'python-programming', 'data-processing'],
+    reason: 'Practice small programming and data tasks that use the skill listed in your role pathway.',
+    accessNote: 'The provider may ask you to sign in to save course progress.',
+  },
+  {
+    id: 'freecodecamp-web',
+    name: 'freeCodeCamp: Responsive Web Design',
+    url: 'https://www.freecodecamp.org/learn/responsive-web-design/',
+    provider: 'freeCodeCamp',
+    cost: 'Free (listed in the supplied resource CSV)',
+    duration: 'Not verified on the course page',
+    checkedDate: '21 Oct 2026',
+    careerIds: ['software-developer'],
+    skillIds: ['programming', 'software-engineering'],
+    reason: 'Build web projects while practicing programming fundamentals.',
+  },
+  {
+    id: 'kaggle-sql',
+    name: 'Kaggle Learn: Intro to SQL',
+    url: 'https://www.kaggle.com/learn/intro-to-sql',
+    provider: 'Kaggle Learn',
+    cost: 'Not verified',
+    duration: 'About 3 hours (course page)',
+    checkedDate: '21 Oct 2026',
+    careerIds: ['data-analyst'],
+    skillIds: ['sql'],
+    reason: 'Practice querying and organizing data in a database.',
+    accessNote: 'The provider may ask you to sign in to save course progress.',
+  },
+  {
+    id: 'kaggle-data-viz',
+    name: 'Kaggle Learn: Data Visualization',
+    url: 'https://www.kaggle.com/learn/data-visualization',
+    provider: 'Kaggle Learn',
+    cost: 'Not verified',
+    duration: 'About 4 hours (course page)',
+    checkedDate: '21 Oct 2026',
+    careerIds: ['data-analyst'],
+    skillIds: ['data-visualisation', 'data-cleaning'],
+    reason: 'Practice creating and interpreting visual summaries of data.',
+    accessNote: 'The provider may ask you to sign in to save course progress.',
+  },
+  {
+    id: 'freecodecamp-data',
+    name: 'freeCodeCamp: Data Analysis with Python',
+    url: 'https://www.freecodecamp.org/learn/data-analysis-with-python/',
+    provider: 'freeCodeCamp',
+    cost: 'Free (listed in the supplied resource CSV)',
+    duration: 'About 300 hours (supplied resource CSV)',
+    checkedDate: '21 Oct 2026',
+    careerIds: ['data-analyst'],
+    skillIds: ['data-cleaning', 'statistics', 'data-processing'],
+    reason: 'Work through Python-based data analysis practice.',
+  },
+  {
+    id: 'cisco-cyber',
+    name: 'Cisco Networking Academy: Introduction to Cybersecurity',
+    url: 'https://www.netacad.com/courses/introduction-to-cybersecurity',
+    provider: 'Cisco Networking Academy',
+    cost: 'Free (course page)',
+    duration: '6 hours (course page)',
+    checkedDate: '21 Oct 2026',
+    careerIds: ['cybersecurity-analyst'],
+    skillIds: ['network-security', 'threat-detection', 'risk-assessment', 'incident-response', 'access-control', 'security-monitoring'],
+    reason: 'Start with the security concepts behind the related role requirements; this introduction is not a full professional qualification.',
+  },
+  {
+    id: 'cisco-networking',
+    name: 'Cisco Networking Academy: Networking Basics',
+    url: 'https://www.netacad.com/courses/networking-basics',
+    provider: 'Cisco Networking Academy',
+    cost: 'Free (course page)',
+    duration: '22 hours (course page)',
+    checkedDate: '21 Oct 2026',
+    careerIds: ['cloud-network-engineer'],
+    skillIds: ['networking', 'troubleshooting'],
+    reason: 'Build foundations in networks, devices, and protocols.',
+  },
+  {
+    id: 'microsoft-cloud',
+    name: 'Microsoft Learn: Describe cloud concepts',
+    url: 'https://learn.microsoft.com/en-us/training/paths/microsoft-azure-fundamentals-describe-cloud-concepts/',
+    provider: 'Microsoft Learn',
+    cost: 'Free learning path (Microsoft Learn)',
+    duration: '56 minutes (course page)',
+    checkedDate: '21 Oct 2026',
+    careerIds: ['cloud-network-engineer'],
+    skillIds: ['cloud-computing'],
+    reason: 'Learn cloud service and deployment concepts used by the selected pathway.',
+    accessNote: 'Using cloud services in a separate account may incur charges; this learning path is reading and training content.',
+  },
+  {
+    id: 'kaggle-ml',
+    name: 'Kaggle Learn: Intro to Machine Learning',
+    url: 'https://www.kaggle.com/learn/intro-to-machine-learning',
+    provider: 'Kaggle Learn',
+    cost: 'Free (listed in the supplied resource CSV)',
+    duration: 'About 3 hours (course page)',
+    checkedDate: '21 Oct 2026',
+    careerIds: ['ai-ml-engineer'],
+    skillIds: ['machine-learning', 'model-evaluation', 'statistics-probability', 'data-processing'],
+    reason: 'Practice model building and validation; use it as an introduction, not proof of job readiness.',
+    accessNote: 'The provider may ask you to sign in to save course progress.',
+  },
+  {
+    id: 'github-version-control',
+    name: 'GitHub Skills: Introduction to GitHub',
+    url: 'https://github.com/skills/introduction-to-github',
+    provider: 'GitHub Skills',
+    cost: 'Not verified',
+    duration: 'Not verified',
+    checkedDate: '21 Oct 2026',
+    careerIds: ['software-developer'],
+    skillIds: ['version-control-git'],
+    reason: 'Practice repository and collaboration workflows related to version control.',
+    accessNote: 'A GitHub account may be needed to complete interactive steps.',
+  },
+];
+

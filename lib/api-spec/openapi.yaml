@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: market-signals
+    description: Public remote-job listing signals
 paths:
   /healthz:
     get:
@@ -24,6 +26,19 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /market-signals:
+    get:
+      operationId: getMarketSignals
+      tags: [market-signals]
+      summary: Read a cached public sample of IT-related remote job listings
+      description: Returns recent listings from Remotive. The upstream feed is delayed and cached to respect its request guidance.
+      responses:
+        "200":
+          description: Listings, a stale cache, or a clear upstream error state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MarketSignalsResponse"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +48,53 @@ components:
           type: string
       required:
         - status
+    MarketSignalItem:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        company:
+          type: string
+        category:
+          type: string
+        location:
+          type: string
+        publishedAt:
+          type: string
+        url:
+          type: string
+          format: uri
+        tags:
+          type: array
+          items:
+            type: string
+      required: [id, title, company, category, location, publishedAt, url, tags]
+    MarketSignalsResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [live, stale, error]
+        sourceName:
+          type: string
+        sourceUrl:
+          type: string
+          format: uri
+        fetchedAt:
+          type: [string, "null"]
+          format: date-time
+        cacheExpiresAt:
+          type: [string, "null"]
+          format: date-time
+        cached:
+          type: boolean
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/MarketSignalItem"
+        error:
+          type: [string, "null"]
+      required: [status, sourceName, sourceUrl, fetchedAt, cacheExpiresAt, cached, items, error]
 
