@@ -1,11 +1,3 @@
-> [!IMPORTANT]
-> ## 📁 Submission Documents & Templates
-> **All required submission templates are in the Google Drive folder below. Download them before you start.**
->
-> ### 👉 [**OPEN THE GOOGLE DRIVE FOLDER**](https://drive.google.com/drive/folders/1xw7c2aN8N-at8hPEULzkcU76e_FFb0Ef) 👈
-
----
-
 # PivotPath
 
 > **An AI career-pivot and reskilling guide for the AI era, helping IT graduates identify transferable skills, explore suitable careers, and plan their next learning steps.**
@@ -19,9 +11,9 @@
 | **Team Name** | PnJ |
 | **Team Domain** | Domain 1 — Future-Ready Workforce |
 | **SDG Track (1–17)** | **SDG 4 — Quality Education (Main)**; supporting **SDG 8 — Decent Work and Economic Growth** and **SDG 9 — Industry, Innovation and Infrastructure** |
-| **Team Leader** | [To fill in] |
-| **University** | [To fill in] |
-| **Number of Members** | [To fill in] |
+| **Team Leader** | [Jeesy Chia Jiek Xin] |
+| **University** | [Multimedia University] |
+| **Number of Members** | [2] |
 
 ## Links
 
