@@ -13,6 +13,7 @@ import { reportSignals } from '@/data/trend-signals';
 import { analyzeCareer } from '@/lib/career-matching';
 import type { Profile } from '@/lib/profile';
 import { InfoNote, PageHeader, SourceLabel, SourceLink } from '@/components/app-shell';
+import { SafeMarkdown } from '@/components/safe-markdown';
 
 type ScenarioMode = 'both' | 'moderate' | 'fast';
 
@@ -325,7 +326,9 @@ export function AiTrendsScenariosPage({ profile }: { profile: Profile }) {
                   {aiStatusQuery.data.model} · {formatDate(aiStatusQuery.data.generatedAt)}
                 </span>
               </div>
-              <div className="text-[12px] leading-relaxed whitespace-pre-wrap mt-3" data-testid="ai-insights-text">{aiStatusQuery.data.insights}</div>
+              <div className="text-[12px] leading-relaxed mt-3" data-testid="ai-insights-text">
+                <SafeMarkdown content={aiStatusQuery.data.insights}/>
+              </div>
             </div>
           )}
           {trackingHandle && !['SUBMITTING', 'IN_QUEUE', 'IN_PROGRESS'].includes(aiStatusQuery.data?.status ?? '') && (
