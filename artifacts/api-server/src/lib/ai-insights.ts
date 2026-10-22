@@ -116,7 +116,7 @@ function requestHash(request: AiInsightsRequest): string {
   return createHash('sha256').update(JSON.stringify(normalizeRequest(request))).digest('hex');
 }
 
-function runpodHeaders(apiKey: string): HeadersInit {
+function runpodHeaders(apiKey: string): Record<string, string> {
   return {
     authorization: `Bearer ${apiKey}`,
     'content-type': 'application/json',
