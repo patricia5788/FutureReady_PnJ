@@ -1,10 +1,10 @@
-# FutureReady AI
+# PivotPath
 
-FutureReady AI is a beginner-friendly career exploration dashboard with a locally saved skills profile and clearly labeled synthetic examples.
+PivotPath is a beginner-friendly career exploration dashboard with a locally saved skills profile and clearly labeled synthetic examples.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/future-ready-ai run dev` — run the FutureReady AI web app
+- `pnpm --filter @workspace/future-ready-ai run dev` — run the PivotPath web app
 - `pnpm --filter @workspace/future-ready-ai run typecheck` — check the web app's TypeScript
 - `pnpm --filter @workspace/future-ready-ai run build` — create a production build
 - `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
