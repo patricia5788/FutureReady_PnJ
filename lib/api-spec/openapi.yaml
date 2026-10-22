@@ -12,6 +12,8 @@ tags:
     description: Health operations
   - name: market-signals
     description: Public remote-job listing signals
+  - name: ai-insights
+    description: Opt-in, server-side AI career insights
 paths:
   /healthz:
     get:
@@ -39,6 +41,49 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/MarketSignalsResponse"
+  /ai-insights:
+    post:
+      operationId: postAiInsights
+      tags: [ai-insights]
+      summary: Generate an opt-in AI career insight
+      description: Sends validated career skills and short market-signal context to the configured server-side Runpod endpoint.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AiInsightsRequest"
+      responses:
+        "200":
+          description: Generated or cached career insight
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AiInsightsResponse"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponse"
+        "429":
+          description: Request limit reached
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponse"
+        "502":
+          description: The AI service returned an unusable response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponse"
+        "503":
+          description: AI service is not configured or is temporarily unavailable
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponse"
 components:
   schemas:
     HealthStatus:
@@ -97,4 +142,81 @@ components:
         error:
           type: [string, "null"]
       required: [status, sourceName, sourceUrl, fetchedAt, cacheExpiresAt, cached, items, error]
+    AiInsightsSkill:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 60
+        level:
+          type: string
+          enum: [Beginner, Intermediate, Advanced]
+      required: [name, level]
+    AiInsightsJobSignal:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 120
+        category:
+          type: string
+          maxLength: 80
+        publishedAt:
+          type: string
+          maxLength: 40
+        tags:
+          type: array
+          maxItems: 5
+          items:
+            type: string
+            maxLength: 40
+      required: [title, category, publishedAt, tags]
+    AiInsightsRequest:
+      type: object
+      properties:
+        careerId:
+          type: string
+          enum:
+            - software-developer
+            - data-analyst
+            - cybersecurity-analyst
+            - cloud-network-engineer
+            - ai-ml-engineer
+        skills:
+          type: array
+          maxItems: 30
+          items:
+            $ref: "#/components/schemas/AiInsightsSkill"
+        skillGaps:
+          type: array
+          maxItems: 12
+          items:
+            type: string
+            maxLength: 60
+        jobSignals:
+          type: array
+          maxItems: 4
+          items:
+            $ref: "#/components/schemas/AiInsightsJobSignal"
+      required: [careerId, skills, skillGaps, jobSignals]
+    AiInsightsResponse:
+      type: object
+      properties:
+        insights:
+          type: string
+        generatedAt:
+          type: string
+          format: date-time
+        model:
+          type: string
+        cached:
+          type: boolean
+      required: [insights, generatedAt, model, cached]
+    ApiErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required: [error]
 

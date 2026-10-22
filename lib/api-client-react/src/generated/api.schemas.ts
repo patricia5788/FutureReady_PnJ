@@ -43,3 +43,70 @@ export interface MarketSignalsResponse {
   error: string | null;
 }
 
+export type AiInsightsSkillLevel = typeof AiInsightsSkillLevel[keyof typeof AiInsightsSkillLevel];
+
+
+export const AiInsightsSkillLevel = {
+  Beginner: 'Beginner',
+  Intermediate: 'Intermediate',
+  Advanced: 'Advanced',
+} as const;
+
+export interface AiInsightsSkill {
+  /**
+     * @minLength 1
+     * @maxLength 60
+     */
+  name: string;
+  level: AiInsightsSkillLevel;
+}
+
+export interface AiInsightsJobSignal {
+  /** @maxLength 120 */
+  title: string;
+  /** @maxLength 80 */
+  category: string;
+  /** @maxLength 40 */
+  publishedAt: string;
+  /**
+     * @maxItems 5
+     * @items.maxLength 40
+     */
+  tags: string[];
+}
+
+export type AiInsightsRequestCareerId = typeof AiInsightsRequestCareerId[keyof typeof AiInsightsRequestCareerId];
+
+
+export const AiInsightsRequestCareerId = {
+  'software-developer': 'software-developer',
+  'data-analyst': 'data-analyst',
+  'cybersecurity-analyst': 'cybersecurity-analyst',
+  'cloud-network-engineer': 'cloud-network-engineer',
+  'ai-ml-engineer': 'ai-ml-engineer',
+} as const;
+
+export interface AiInsightsRequest {
+  careerId: AiInsightsRequestCareerId;
+  /** @maxItems 30 */
+  skills: AiInsightsSkill[];
+  /**
+     * @maxItems 12
+     * @items.maxLength 60
+     */
+  skillGaps: string[];
+  /** @maxItems 4 */
+  jobSignals: AiInsightsJobSignal[];
+}
+
+export interface AiInsightsResponse {
+  insights: string;
+  generatedAt: string;
+  model: string;
+  cached: boolean;
+}
+
+export interface ApiErrorResponse {
+  error: string;
+}
+

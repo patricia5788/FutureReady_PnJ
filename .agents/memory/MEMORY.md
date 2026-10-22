@@ -1,0 +1,1 @@
+- [Vite artifact build environment](vite-artifact-build-env.md) — direct builds need the artifact's required `PORT` and `BASE_PATH` values.
