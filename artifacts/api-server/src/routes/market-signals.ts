@@ -77,7 +77,7 @@ router.get('/market-signals', async (req, res): Promise<void> => {
 
   try {
     const upstream = await fetch(remotiveApiUrl, {
-      headers: { accept: 'application/json', 'user-agent': 'PivotPath university career exploration demo' },
+      headers: { accept: 'application/json', 'user-agent': 'FutureReady university career exploration demo' },
       signal: AbortSignal.timeout(12_000),
     });
     if (!upstream.ok) {

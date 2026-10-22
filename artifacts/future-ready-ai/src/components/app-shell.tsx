@@ -28,9 +28,9 @@ export function AppShell({ children }: { children: ReactNode }) {
     <div className="app-shell">
       <aside className="sidebar">
         <Link href="/" className="flex items-center gap-3 px-2 mb-10 no-underline text-inherit" data-testid="link-brand">
-          <span className="brand-mark">P</span>
+          <span className="brand-mark">F</span>
           <span className="leading-tight">
-            <strong className="block text-[14px] tracking-tight">PivotPath</strong>
+            <strong className="block text-[14px] tracking-tight">FutureReady</strong>
             <span className="text-[10px] opacity-60">IT career pathways</span>
           </span>
         </Link>
