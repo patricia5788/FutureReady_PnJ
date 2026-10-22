@@ -283,7 +283,7 @@ export function AiTrendsScenariosPage({ profile }: { profile: Profile }) {
               Save at least one skill and choose a target career to enable AI insights. <Link href="/skills" className="text-[hsl(var(--primary))] font-bold">Open your profile</Link>
             </p>
           )}
-          {aiMutation.isPending && <p className="text-[12px] mt-3 mb-0" role="status" data-testid="ai-insights-loading">Preparing an insight. This can take up to a minute.</p>}
+          {aiMutation.isPending && <p className="text-[12px] mt-3 mb-0" role="status" data-testid="ai-insights-loading">Checking the Runpod job. This can take up to 90 seconds; checking again later reuses the same job.</p>}
           {aiMutation.isError && (
             <div className="rounded-lg bg-[hsl(var(--muted))] p-3 mt-3 text-[12px]" role="alert" data-testid="ai-insights-error">
               AI insights are unavailable right now. Use the rule-based profile analysis and scenario comparison on this page. {aiMutation.error instanceof Error ? aiMutation.error.message : ''}
