@@ -33,15 +33,8 @@ function asText(value: unknown): string {
 }
 
 function isItListing(job: Record<string, unknown>): boolean {
-  const searchable = [
-    asText(job.title),
-    asText(job.category),
-    ...(Array.isArray(job.tags) ? job.tags.map(asText) : []),
-  ]
-    .join(' ')
-    .toLowerCase();
-
-  return /software|developer|programmer|data|cyber|security|cloud|network|ai|machine learning|devops|system admin|qa engineer|information technology/.test(searchable);
+  const searchable = `${asText(job.title)} ${asText(job.category)}`.toLowerCase();
+  return /software|developer|programmer|data analyst|data scientist|cyber|security|cloud|network|ai engineer|machine learning|devops|system admin|service desk|information technology|qa engineer/.test(searchable);
 }
 
 function mapJob(value: unknown): SignalPayload['items'][number] | undefined {

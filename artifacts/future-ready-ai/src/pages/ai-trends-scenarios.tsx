@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Activity, ArrowRight, Clock3, ExternalLink, RefreshCw, ShieldAlert } from 'lucide-react';
-import { useGetMarketSignals, type MarketSignalsResponse } from '@workspace/api-client-react';
+import {
+  useGetMarketSignals,
+  usePostAiInsights,
+  type AiInsightsRequest,
+  type MarketSignalsResponse,
+} from '@workspace/api-client-react';
 import { Link } from 'wouter';
 import { careers, findCareer } from '@/data/career-catalog';
 import { reportSignals } from '@/data/trend-signals';
@@ -65,8 +70,9 @@ export function AiTrendsScenariosPage({ profile }: { profile: Profile }) {
   const [selectedCareerId, setSelectedCareerId] = useState(profile.targetCareer || 'all');
   const [cachedSignals, setCachedSignals] = useState<MarketSignalsResponse | null>(readCachedSignals);
   const feedQuery = useGetMarketSignals({
-    query: { staleTime: 10 * 60 * 1000, retry: false, refetchOnWindowFocus: false },
+    query: { queryKey: ['market-signals'], staleTime: 10 * 60 * 1000, retry: false, refetchOnWindowFocus: false },
   });
+  const aiMutation = usePostAiInsights({ mutation: { retry: false } });
 
   useEffect(() => {
     if (feedQuery.data?.status === 'live') {
@@ -91,9 +97,29 @@ export function AiTrendsScenariosPage({ profile }: { profile: Profile }) {
   const scenarios = mode === 'both'
     ? (['moderate', 'fast'] as const)
     : [mode] as const;
+  const canGenerateInsights = Boolean(selectedCareer && profile.skills.length > 0);
 
   const refresh = async () => {
     await feedQuery.refetch();
+  };
+
+  const generateInsights = () => {
+    if (!selectedCareer || !profile.skills.length) return;
+    const match = analyzeCareer(profile, selectedCareer);
+    const request: AiInsightsRequest = {
+      careerId: selectedCareer.id as AiInsightsRequest['careerId'],
+      skills: profile.skills.map(({ name, level }) => ({ name, level })),
+      skillGaps: [...match.developing, ...match.unprovided]
+        .map((item) => item.requirement.name)
+        .slice(0, 12),
+      jobSignals: (signalData?.items ?? []).slice(0, 4).map((job) => ({
+        title: job.title,
+        category: job.category,
+        publishedAt: job.publishedAt,
+        tags: job.tags.slice(0, 5),
+      })),
+    };
+    aiMutation.mutate({ data: request });
   };
 
   return (
@@ -139,22 +165,22 @@ export function AiTrendsScenariosPage({ profile }: { profile: Profile }) {
         )}
 
         <div className="grid sm:grid-cols-2 gap-3 mt-4 text-[11px]">
-          <div className="comparison-fact">
-            <div className="comparison-fact-label">Source</div>
-            <div className="comparison-fact-value">
+          <div className="data-fact">
+            <div className="data-fact-label">Source</div>
+            <div className="data-fact-value">
               {signalData
                 ? <SourceLink href={signalData.sourceUrl}>{signalData.sourceName}</SourceLink>
                 : <SourceLink href="https://remotive.com/remote-jobs/api">Remotive Remote Jobs Public API</SourceLink>}
             </div>
           </div>
-          <div className="comparison-fact">
-            <div className="comparison-fact-label">Last successful retrieval</div>
-            <div className="comparison-fact-value" data-testid="market-feed-updated">{formatDate(signalData?.fetchedAt)}</div>
+          <div className="data-fact">
+            <div className="data-fact-label">Last successful retrieval</div>
+            <div className="data-fact-value" data-testid="market-feed-updated">{formatDate(signalData?.fetchedAt)}</div>
           </div>
           {signalData?.cacheExpiresAt && (
-            <div className="comparison-fact sm:col-span-2">
-              <div className="comparison-fact-label">Next upstream check after</div>
-              <div className="comparison-fact-value">{formatDate(signalData.cacheExpiresAt)} · the provider recommends infrequent requests</div>
+            <div className="data-fact sm:col-span-2">
+              <div className="data-fact-label">Next upstream check after</div>
+              <div className="data-fact-value">{formatDate(signalData.cacheExpiresAt)} · the provider recommends infrequent requests</div>
             </div>
           )}
         </div>
@@ -233,6 +259,48 @@ export function AiTrendsScenariosPage({ profile }: { profile: Profile }) {
             </button>
           ))}
         </div>
+        <section className="card-muted rounded-xl p-4 mt-4" data-testid="ai-insights-section">
+          <div className="flex flex-wrap justify-between items-start gap-3">
+            <div>
+              <div className="eyebrow">Optional AI explanation</div>
+              <h3 className="text-[18px] mt-1 mb-1">Get a second, plain-language view</h3>
+              <p className="text-[11px] text-[hsl(var(--muted-foreground))] max-w-[700px] leading-relaxed m-0" data-testid="ai-insights-privacy">
+                Clicking sends your selected career, skill names and levels, locally calculated skill gaps, and up to four short job-listing summaries to the configured Runpod endpoint. Education, interests, goals, and contact information are not sent.
+              </p>
+            </div>
+            <button
+              type="button"
+              className="button-primary"
+              onClick={generateInsights}
+              disabled={!canGenerateInsights || aiMutation.isPending}
+              data-testid="button-ai-insights"
+            >
+              {aiMutation.isPending ? 'Generating…' : 'Generate AI Career Insights'}
+            </button>
+          </div>
+          {!canGenerateInsights && (
+            <p className="text-[11px] text-[hsl(var(--muted-foreground))] mt-3 mb-0" data-testid="ai-insights-needs-profile">
+              Save at least one skill and choose a target career to enable AI insights. <Link href="/skills" className="text-[hsl(var(--primary))] font-bold">Open your profile</Link>
+            </p>
+          )}
+          {aiMutation.isPending && <p className="text-[12px] mt-3 mb-0" role="status" data-testid="ai-insights-loading">Preparing an insight. This can take up to a minute.</p>}
+          {aiMutation.isError && (
+            <div className="rounded-lg bg-[hsl(var(--muted))] p-3 mt-3 text-[12px]" role="alert" data-testid="ai-insights-error">
+              AI insights are unavailable right now. Use the rule-based profile analysis and scenario comparison on this page. {aiMutation.error instanceof Error ? aiMutation.error.message : ''}
+            </div>
+          )}
+          {aiMutation.data && (
+            <div className="border-t border-[hsl(var(--border))] mt-4 pt-4" data-testid="ai-insights-result">
+              <div className="flex flex-wrap justify-between gap-2 items-center">
+                <div className="eyebrow">Generated guidance · not a career prediction</div>
+                <span className="text-[10px] text-[hsl(var(--muted-foreground))]">
+                  {aiMutation.data.model} · {formatDate(aiMutation.data.generatedAt)}{aiMutation.data.cached ? ' · cached' : ''}
+                </span>
+              </div>
+              <div className="text-[12px] leading-relaxed whitespace-pre-wrap mt-3" data-testid="ai-insights-text">{aiMutation.data.insights}</div>
+            </div>
+          )}
+        </section>
         <div className="scenario-grid mt-4" data-testid="scenario-results">
           {scenarios.map((key) => {
             const scenario = scenarioContent[key];

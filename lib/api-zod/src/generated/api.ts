@@ -42,3 +42,52 @@ export const GetMarketSignalsResponse = zod.object({
 })
 
 
+/**
+ * Sends validated career skills and short market-signal context to the configured server-side Runpod endpoint.
+ * @summary Generate an opt-in AI career insight
+ */
+export const postAiInsightsBodySkillsItemNameMax = 60;
+
+export const postAiInsightsBodySkillsMax = 30;
+
+export const postAiInsightsBodySkillGapsItemMax = 60;
+
+export const postAiInsightsBodySkillGapsMax = 12;
+
+export const postAiInsightsBodyJobSignalsItemTitleMax = 120;
+
+export const postAiInsightsBodyJobSignalsItemCategoryMax = 80;
+
+export const postAiInsightsBodyJobSignalsItemPublishedAtMax = 40;
+
+export const postAiInsightsBodyJobSignalsItemTagsItemMax = 40;
+
+export const postAiInsightsBodyJobSignalsItemTagsMax = 5;
+
+export const postAiInsightsBodyJobSignalsMax = 4;
+
+
+
+export const PostAiInsightsBody = zod.object({
+  "careerId": zod.enum(['software-developer', 'data-analyst', 'cybersecurity-analyst', 'cloud-network-engineer', 'ai-ml-engineer']),
+  "skills": zod.array(zod.object({
+  "name": zod.string().min(1).max(postAiInsightsBodySkillsItemNameMax),
+  "level": zod.enum(['Beginner', 'Intermediate', 'Advanced'])
+})).max(postAiInsightsBodySkillsMax),
+  "skillGaps": zod.array(zod.string().max(postAiInsightsBodySkillGapsItemMax)).max(postAiInsightsBodySkillGapsMax),
+  "jobSignals": zod.array(zod.object({
+  "title": zod.string().max(postAiInsightsBodyJobSignalsItemTitleMax),
+  "category": zod.string().max(postAiInsightsBodyJobSignalsItemCategoryMax),
+  "publishedAt": zod.string().max(postAiInsightsBodyJobSignalsItemPublishedAtMax),
+  "tags": zod.array(zod.string().max(postAiInsightsBodyJobSignalsItemTagsItemMax)).max(postAiInsightsBodyJobSignalsItemTagsMax)
+})).max(postAiInsightsBodyJobSignalsMax)
+})
+
+export const PostAiInsightsResponse = zod.object({
+  "insights": zod.string(),
+  "generatedAt": zod.coerce.date(),
+  "model": zod.string(),
+  "cached": zod.boolean()
+})
+
+

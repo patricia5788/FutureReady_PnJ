@@ -6,6 +6,13 @@
  * OpenAPI spec version: 0.1.0
  */
 
+export * from './aiInsightsJobSignal';
+export * from './aiInsightsRequest';
+export * from './aiInsightsRequestCareerId';
+export * from './aiInsightsResponse';
+export * from './aiInsightsSkill';
+export * from './aiInsightsSkillLevel';
+export * from './apiErrorResponse';
 export * from './healthStatus';
 export * from './marketSignalItem';
 export * from './marketSignalsResponse';

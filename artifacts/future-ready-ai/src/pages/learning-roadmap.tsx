@@ -40,7 +40,7 @@ export function LearningRoadmapPage({ profile }: { profile: Profile }) {
         <strong>Check before you commit.</strong> Course cost and duration labels show what the linked page or supplied course list stated when checked. “Not verified” means we could not confirm it. A course is a starting resource, not proof of role readiness.
       </InfoNote>
 
-      {!hasSkills || !career ? (
+      {!hasSkills || !career || !roadmap ? (
         <EmptyProfileCard>
           <div className="eyebrow">A target and profile are needed first</div>
           <h2 className="text-[24px] mt-2">{!hasSkills ? 'Add skills to build your pathway.' : 'Choose a target career to build your pathway.'}</h2>
@@ -98,9 +98,9 @@ export function LearningRoadmapPage({ profile }: { profile: Profile }) {
                   </div>
                   <p className="text-[12px] leading-relaxed text-[hsl(var(--muted-foreground))] mt-4 mb-3">{step.resource.reason}</p>
                   <div className="grid sm:grid-cols-3 gap-2 text-[11px] mb-4">
-                    <div className="comparison-fact"><div className="comparison-fact-label">Cost</div><div className="comparison-fact-value">{step.resource.cost}</div></div>
-                    <div className="comparison-fact"><div className="comparison-fact-label">Estimated duration</div><div className="comparison-fact-value flex items-center gap-1"><Clock3 size={12}/>{step.resource.duration}</div></div>
-                    <div className="comparison-fact"><div className="comparison-fact-label">Checked</div><div className="comparison-fact-value">{step.resource.checkedDate}</div></div>
+                    <div className="data-fact"><div className="data-fact-label">Cost</div><div className="data-fact-value">{step.resource.cost}</div></div>
+                    <div className="data-fact"><div className="data-fact-label">Estimated duration</div><div className="data-fact-value flex items-center gap-1"><Clock3 size={12}/>{step.resource.duration}</div></div>
+                    <div className="data-fact"><div className="data-fact-label">Checked</div><div className="data-fact-value">{step.resource.checkedDate}</div></div>
                   </div>
                   {step.resource.accessNote && <p className="text-[10px] text-[hsl(var(--muted-foreground))] mt-0 mb-3">{step.resource.accessNote}</p>}
                   <SourceLink href={step.resource.url}>{step.resource.name} <ExternalLink className="inline" size={12}/></SourceLink>
