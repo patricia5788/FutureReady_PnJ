@@ -99,11 +99,48 @@ export interface AiInsightsRequest {
   jobSignals: AiInsightsJobSignal[];
 }
 
-export interface AiInsightsResponse {
-  insights: string;
-  generatedAt: string;
-  model: string;
-  cached: boolean;
+export type AiInsightsSubmissionResponseStatus = typeof AiInsightsSubmissionResponseStatus[keyof typeof AiInsightsSubmissionResponseStatus];
+
+
+export const AiInsightsSubmissionResponseStatus = {
+  SUBMITTING: 'SUBMITTING',
+  IN_QUEUE: 'IN_QUEUE',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED',
+  TIMED_OUT: 'TIMED_OUT',
+  EXPIRED: 'EXPIRED',
+  SUBMISSION_UNKNOWN: 'SUBMISSION_UNKNOWN',
+} as const;
+
+export interface AiInsightsSubmissionResponse {
+  trackingHandle: string;
+  status: AiInsightsSubmissionResponseStatus;
+}
+
+export type AiInsightsJobStatusResponseStatus = typeof AiInsightsJobStatusResponseStatus[keyof typeof AiInsightsJobStatusResponseStatus];
+
+
+export const AiInsightsJobStatusResponseStatus = {
+  SUBMITTING: 'SUBMITTING',
+  IN_QUEUE: 'IN_QUEUE',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED',
+  TIMED_OUT: 'TIMED_OUT',
+  EXPIRED: 'EXPIRED',
+  SUBMISSION_UNKNOWN: 'SUBMISSION_UNKNOWN',
+} as const;
+
+export interface AiInsightsJobStatusResponse {
+  trackingHandle: string;
+  status: AiInsightsJobStatusResponseStatus;
+  insights?: string;
+  generatedAt?: string;
+  model?: string;
+  error?: string;
 }
 
 export interface ApiErrorResponse {

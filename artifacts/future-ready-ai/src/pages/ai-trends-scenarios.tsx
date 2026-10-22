@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Activity, ArrowRight, Clock3, ExternalLink, RefreshCw, ShieldAlert } from 'lucide-react';
 import {
   useGetMarketSignals,
+  useGetAiInsightsStatus,
   usePostAiInsights,
   type AiInsightsRequest,
   type MarketSignalsResponse,
@@ -16,6 +17,7 @@ import { InfoNote, PageHeader, SourceLabel, SourceLink } from '@/components/app-
 type ScenarioMode = 'both' | 'moderate' | 'fast';
 
 const localCacheKey = 'future-ready-last-market-signals';
+const aiHandleKey = 'future-ready-ai-insight-handle';
 
 const scenarioContent = {
   moderate: {
@@ -72,7 +74,26 @@ export function AiTrendsScenariosPage({ profile }: { profile: Profile }) {
   const feedQuery = useGetMarketSignals({
     query: { queryKey: ['market-signals'], staleTime: 10 * 60 * 1000, retry: false, refetchOnWindowFocus: false },
   });
-  const aiMutation = usePostAiInsights({ mutation: { retry: false } });
+  const [trackingHandle, setTrackingHandle] = useState<string | null>(() => {
+    try { return localStorage.getItem(aiHandleKey); } catch { return null; }
+  });
+  const aiMutation = usePostAiInsights({
+    mutation: {
+      retry: false,
+      onSuccess: (result) => {
+        setTrackingHandle(result.trackingHandle);
+        try { localStorage.setItem(aiHandleKey, result.trackingHandle); } catch { /* DB deduplication still protects retries. */ }
+      },
+    },
+  });
+  const aiStatusQuery = useGetAiInsightsStatus(trackingHandle ?? '', {
+    query: {
+      queryKey: ['ai-insight-status', trackingHandle],
+      enabled: Boolean(trackingHandle),
+      refetchInterval: (query) => ['SUBMITTING', 'IN_QUEUE', 'IN_PROGRESS'].includes(query.state.data?.status ?? '') ? 5_000 : false,
+      retry: false,
+    },
+  });
 
   useEffect(() => {
     if (feedQuery.data?.status === 'live') {
@@ -105,6 +126,7 @@ export function AiTrendsScenariosPage({ profile }: { profile: Profile }) {
 
   const generateInsights = () => {
     if (!selectedCareer || !profile.skills.length) return;
+    if (trackingHandle) return;
     const match = analyzeCareer(profile, selectedCareer);
     const request: AiInsightsRequest = {
       careerId: selectedCareer.id as AiInsightsRequest['careerId'],
@@ -120,6 +142,12 @@ export function AiTrendsScenariosPage({ profile }: { profile: Profile }) {
       })),
     };
     aiMutation.mutate({ data: request });
+  };
+
+  const clearSavedInsight = () => {
+    setTrackingHandle(null);
+    aiMutation.reset();
+    try { localStorage.removeItem(aiHandleKey); } catch { /* Server-side request deduplication remains active. */ }
   };
 
   return (
@@ -272,10 +300,10 @@ export function AiTrendsScenariosPage({ profile }: { profile: Profile }) {
               type="button"
               className="button-primary"
               onClick={generateInsights}
-              disabled={!canGenerateInsights || aiMutation.isPending}
+              disabled={!canGenerateInsights || aiMutation.isPending || Boolean(trackingHandle)}
               data-testid="button-ai-insights"
             >
-              {aiMutation.isPending ? 'Generating…' : 'Generate AI Career Insights'}
+              {aiMutation.isPending ? 'Submitting…' : trackingHandle ? 'Insight job saved' : 'Generate AI Career Insights'}
             </button>
           </div>
           {!canGenerateInsights && (
@@ -283,22 +311,27 @@ export function AiTrendsScenariosPage({ profile }: { profile: Profile }) {
               Save at least one skill and choose a target career to enable AI insights. <Link href="/skills" className="text-[hsl(var(--primary))] font-bold">Open your profile</Link>
             </p>
           )}
-          {aiMutation.isPending && <p className="text-[12px] mt-3 mb-0" role="status" data-testid="ai-insights-loading">Checking the Runpod job. This can take up to 90 seconds; checking again later reuses the same job.</p>}
-          {aiMutation.isError && (
+          {(aiMutation.isPending || ['SUBMITTING', 'IN_QUEUE', 'IN_PROGRESS'].includes(aiStatusQuery.data?.status ?? '')) && <p className="text-[12px] mt-3 mb-0" role="status" data-testid="ai-insights-loading">Your insight is {aiStatusQuery.data?.status === 'IN_QUEUE' ? 'queued' : 'processing'}. This page checks its status every 5 seconds.</p>}
+          {(aiMutation.isError || aiStatusQuery.isError || ['FAILED', 'CANCELLED', 'TIMED_OUT', 'EXPIRED', 'SUBMISSION_UNKNOWN'].includes(aiStatusQuery.data?.status ?? '')) && (
             <div className="rounded-lg bg-[hsl(var(--muted))] p-3 mt-3 text-[12px]" role="alert" data-testid="ai-insights-error">
-              AI insights are unavailable right now. Use the rule-based profile analysis and scenario comparison on this page. {aiMutation.error instanceof Error ? aiMutation.error.message : ''}
+              AI insights are unavailable. Use the rule-based profile analysis and scenario comparison on this page. {aiStatusQuery.data?.error ?? (aiMutation.error instanceof Error ? aiMutation.error.message : '')}
             </div>
           )}
-          {aiMutation.data && (
+          {aiStatusQuery.data?.status === 'COMPLETED' && aiStatusQuery.data.insights && (
             <div className="border-t border-[hsl(var(--border))] mt-4 pt-4" data-testid="ai-insights-result">
               <div className="flex flex-wrap justify-between gap-2 items-center">
                 <div className="eyebrow">Generated guidance · not a career prediction</div>
                 <span className="text-[10px] text-[hsl(var(--muted-foreground))]">
-                  {aiMutation.data.model} · {formatDate(aiMutation.data.generatedAt)}{aiMutation.data.cached ? ' · cached' : ''}
+                  {aiStatusQuery.data.model} · {formatDate(aiStatusQuery.data.generatedAt)}
                 </span>
               </div>
-              <div className="text-[12px] leading-relaxed whitespace-pre-wrap mt-3" data-testid="ai-insights-text">{aiMutation.data.insights}</div>
+              <div className="text-[12px] leading-relaxed whitespace-pre-wrap mt-3" data-testid="ai-insights-text">{aiStatusQuery.data.insights}</div>
             </div>
+          )}
+          {trackingHandle && !['SUBMITTING', 'IN_QUEUE', 'IN_PROGRESS'].includes(aiStatusQuery.data?.status ?? '') && (
+            <button type="button" className="button-secondary mt-3" onClick={clearSavedInsight} data-testid="button-clear-ai-insight">
+              Clear saved insight
+            </button>
           )}
         </section>
         <div className="scenario-grid mt-4" data-testid="scenario-results">

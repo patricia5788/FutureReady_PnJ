@@ -7,11 +7,14 @@
  */
 
 export * from './aiInsightsJobSignal';
+export * from './aiInsightsJobStatusResponse';
+export * from './aiInsightsJobStatusResponseStatus';
 export * from './aiInsightsRequest';
 export * from './aiInsightsRequestCareerId';
-export * from './aiInsightsResponse';
 export * from './aiInsightsSkill';
 export * from './aiInsightsSkillLevel';
+export * from './aiInsightsSubmissionResponse';
+export * from './aiInsightsSubmissionResponseStatus';
 export * from './apiErrorResponse';
 export * from './healthStatus';
 export * from './marketSignalItem';
