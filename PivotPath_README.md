@@ -11,9 +11,9 @@
 | **Team Name** | PnJ |
 | **Team Domain** | Domain 1 — Future-Ready Workforce |
 | **SDG Track (1–17)** | **SDG 4 — Quality Education (Main)**; supporting **SDG 8 — Decent Work and Economic Growth** and **SDG 9 — Industry, Innovation and Infrastructure** |
-| **Team Leader** | [Jeesy Chia Jiek Xin] |
-| **University** | [Multimedia University] |
-| **Number of Members** | [2] |
+| **Team Leader** | Jessy Chia Jiek Xin |
+| **University** | Multimedia University |
+| **Number of Members** | 2 |
 
 ## Links
 
