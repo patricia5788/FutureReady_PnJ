@@ -54,12 +54,12 @@ paths:
             schema:
               $ref: "#/components/schemas/AiInsightsRequest"
       responses:
-        "200":
-          description: Generated or cached career insight
+        "202":
+          description: Insight job accepted or an existing matching job reused
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AiInsightsResponse"
+                $ref: "#/components/schemas/AiInsightsSubmissionResponse"
         "400":
           description: Invalid request
           content:
@@ -80,6 +80,31 @@ paths:
                 $ref: "#/components/schemas/ApiErrorResponse"
         "503":
           description: AI service is not configured or is temporarily unavailable
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponse"
+  /ai-insights/{trackingHandle}:
+    get:
+      operationId: getAiInsightsStatus
+      tags: [ai-insights]
+      summary: Check an existing AI insight job without submitting a new one
+      parameters:
+        - name: trackingHandle
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Current job state, including completed insight text
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AiInsightsJobStatusResponse"
+        "404":
+          description: Tracking handle is unknown or expired
           content:
             application/json:
               schema:
@@ -200,9 +225,25 @@ components:
           items:
             $ref: "#/components/schemas/AiInsightsJobSignal"
       required: [careerId, skills, skillGaps, jobSignals]
-    AiInsightsResponse:
+    AiInsightsSubmissionResponse:
       type: object
       properties:
+        trackingHandle:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [SUBMITTING, IN_QUEUE, IN_PROGRESS, COMPLETED, FAILED, CANCELLED, TIMED_OUT, EXPIRED, SUBMISSION_UNKNOWN]
+      required: [trackingHandle, status]
+    AiInsightsJobStatusResponse:
+      type: object
+      properties:
+        trackingHandle:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [SUBMITTING, IN_QUEUE, IN_PROGRESS, COMPLETED, FAILED, CANCELLED, TIMED_OUT, EXPIRED, SUBMISSION_UNKNOWN]
         insights:
           type: string
         generatedAt:
@@ -210,9 +251,9 @@ components:
           format: date-time
         model:
           type: string
-        cached:
-          type: boolean
-      required: [insights, generatedAt, model, cached]
+        error:
+          type: string
+      required: [trackingHandle, status]
     ApiErrorResponse:
       type: object
       properties:

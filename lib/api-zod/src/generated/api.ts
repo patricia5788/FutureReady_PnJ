@@ -84,10 +84,25 @@ export const PostAiInsightsBody = zod.object({
 })
 
 export const PostAiInsightsResponse = zod.object({
-  "insights": zod.string(),
-  "generatedAt": zod.coerce.date(),
-  "model": zod.string(),
-  "cached": zod.boolean()
+  "trackingHandle": zod.string().uuid(),
+  "status": zod.enum(['SUBMITTING', 'IN_QUEUE', 'IN_PROGRESS', 'COMPLETED', 'FAILED', 'CANCELLED', 'TIMED_OUT', 'EXPIRED', 'SUBMISSION_UNKNOWN'])
+})
+
+
+/**
+ * @summary Check an existing AI insight job without submitting a new one
+ */
+export const GetAiInsightsStatusParams = zod.object({
+  "trackingHandle": zod.coerce.string().uuid()
+})
+
+export const GetAiInsightsStatusResponse = zod.object({
+  "trackingHandle": zod.string().uuid(),
+  "status": zod.enum(['SUBMITTING', 'IN_QUEUE', 'IN_PROGRESS', 'COMPLETED', 'FAILED', 'CANCELLED', 'TIMED_OUT', 'EXPIRED', 'SUBMISSION_UNKNOWN']),
+  "insights": zod.string().optional(),
+  "generatedAt": zod.coerce.date().optional(),
+  "model": zod.string().optional(),
+  "error": zod.string().optional()
 })
 
 

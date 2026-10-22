@@ -20,8 +20,9 @@ import type {
 } from '@tanstack/react-query';
 
 import type {
+  AiInsightsJobStatusResponse,
   AiInsightsRequest,
-  AiInsightsResponse,
+  AiInsightsSubmissionResponse,
   ApiErrorResponse,
   HealthStatus,
   MarketSignalsResponse
@@ -125,13 +126,6 @@ export function useHealthCheck<TData = Awaited<ReturnType<typeof healthCheck>>, 
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
-
 export const getGetMarketSignalsUrl = () => {
 
 
@@ -203,13 +197,6 @@ export function useGetMarketSignals<TData = Awaited<ReturnType<typeof getMarketS
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
-
 export const getPostAiInsightsUrl = () => {
 
 
@@ -222,7 +209,7 @@ export const getPostAiInsightsUrl = () => {
  * Sends validated career skills and short market-signal context to the configured server-side Runpod endpoint.
  * @summary Generate an opt-in AI career insight
  */
-export const postAiInsights = async (aiInsightsRequest: AiInsightsRequest, options?: Parameters<typeof customFetch>[1]): Promise<AiInsightsResponse> => {
+export const postAiInsights = async (aiInsightsRequest: AiInsightsRequest, options?: Parameters<typeof customFetch>[1]): Promise<AiInsightsSubmissionResponse> => {
 
     const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
     if (!h) return {};
@@ -238,7 +225,7 @@ export const postAiInsights = async (aiInsightsRequest: AiInsightsRequest, optio
     }
     return headers;
   };
-return customFetch<AiInsightsResponse>(getPostAiInsightsUrl(),
+return customFetch<AiInsightsSubmissionResponse>(getPostAiInsightsUrl(),
   {
     ...options,
     method: 'POST',
@@ -298,4 +285,81 @@ export const usePostAiInsights = <TError = ErrorType<ApiErrorResponse>,
       > => {
       return useMutation(getPostAiInsightsMutationOptions(options));
     }
+
+export const getGetAiInsightsStatusUrl = (trackingHandle: string,) => {
+
+
+
+
+  return `/api/ai-insights/${trackingHandle}`
+}
+
+/**
+ * @summary Check an existing AI insight job without submitting a new one
+ */
+export const getAiInsightsStatus = async (trackingHandle: string, options?: Parameters<typeof customFetch>[1]): Promise<AiInsightsJobStatusResponse> => {
+
+  return customFetch<AiInsightsJobStatusResponse>(getGetAiInsightsStatusUrl(trackingHandle),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetAiInsightsStatusQueryKey = (trackingHandle: string,) => {
+    return [
+    `/api/ai-insights/${trackingHandle}`
+    ] as const;
+    }
+
+
+export const getGetAiInsightsStatusQueryOptions = <TData = Awaited<ReturnType<typeof getAiInsightsStatus>>, TError = ErrorType<ApiErrorResponse>>(trackingHandle: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getAiInsightsStatus>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetAiInsightsStatusQueryKey(trackingHandle);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAiInsightsStatus>>> = ({ signal }) => getAiInsightsStatus(trackingHandle, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: trackingHandle !== null && trackingHandle !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAiInsightsStatus>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetAiInsightsStatusQueryResult = NonNullable<Awaited<ReturnType<typeof getAiInsightsStatus>>>
+export type GetAiInsightsStatusQueryError = ErrorType<ApiErrorResponse>
+
+
+/**
+ * @summary Check an existing AI insight job without submitting a new one
+ */
+
+export function useGetAiInsightsStatus<TData = Awaited<ReturnType<typeof getAiInsightsStatus>>, TError = ErrorType<ApiErrorResponse>>(
+ trackingHandle: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getAiInsightsStatus>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetAiInsightsStatusQueryOptions(trackingHandle,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
 
