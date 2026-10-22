@@ -22,6 +22,11 @@ export class AiInsightsError extends Error {
   }
 }
 
+function isRunpodAiEnabled(): boolean {
+  // Fail closed. GPU-backed inference requires an explicit server-side opt-in.
+  return process.env.RUNPOD_AI_ENABLED?.trim().toLowerCase() === 'true';
+}
+
 function cleanText(value: string): string {
   return value.replace(/[\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim();
 }
@@ -105,6 +110,13 @@ function responseFromRow(row: typeof aiInsightJobsTable.$inferSelect): AiInsight
 }
 
 export async function startAiInsights(request: AiInsightsRequest, clientKey: string): Promise<AiInsightsSubmissionResponse> {
+  if (!isRunpodAiEnabled()) {
+    throw new AiInsightsError(
+      'AI Insights are temporarily unavailable for this demo. Your profile-based career guidance and scenario comparison are still available.',
+      503,
+    );
+  }
+
   const normalized = normalizeRequest(request);
   const requestHash = createHash('sha256').update(JSON.stringify(normalized)).digest('hex');
   const now = new Date();

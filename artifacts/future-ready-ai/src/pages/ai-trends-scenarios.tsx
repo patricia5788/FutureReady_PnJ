@@ -315,7 +315,7 @@ export function AiTrendsScenariosPage({ profile }: { profile: Profile }) {
           {(aiMutation.isPending || ['SUBMITTING', 'IN_QUEUE', 'IN_PROGRESS'].includes(aiStatusQuery.data?.status ?? '')) && <p className="text-[12px] mt-3 mb-0" role="status" data-testid="ai-insights-loading">Your insight is {aiStatusQuery.data?.status === 'IN_QUEUE' ? 'queued' : 'processing'}. This page checks its status every 5 seconds.</p>}
           {(aiMutation.isError || aiStatusQuery.isError || ['FAILED', 'CANCELLED', 'TIMED_OUT', 'EXPIRED', 'SUBMISSION_UNKNOWN'].includes(aiStatusQuery.data?.status ?? '')) && (
             <div className="rounded-lg bg-[hsl(var(--muted))] p-3 mt-3 text-[12px]" role="alert" data-testid="ai-insights-error">
-              AI insights are unavailable. Use the rule-based profile analysis and scenario comparison on this page. {aiStatusQuery.data?.error ?? (aiMutation.error instanceof Error ? aiMutation.error.message : '')}
+              AI Insights are temporarily unavailable for this demo. Your profile-based career guidance and scenario comparison are still available.
             </div>
           )}
           {aiStatusQuery.data?.status === 'COMPLETED' && aiStatusQuery.data.insights && (
