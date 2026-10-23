@@ -1,0 +1,28 @@
+kind = "slides"
+previewPath = "/future-ready-presentation/"
+title = "FutureReady — SDC Hackathon 2026"
+description = "A six-slide project presentation introducing FutureReady, its profile-based career guidance, illustrative AI-era signals, and prototype safety boundaries."
+version = "1.0.0"
+id = "artifacts/future-ready-presentation"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/future-ready-presentation/" ]
+localPort = 22163
+
+[services.development]
+run = "pnpm --filter @workspace/future-ready-presentation run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/future-ready-presentation", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/future-ready-presentation/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22163"
+BASE_PATH = "/future-ready-presentation/"

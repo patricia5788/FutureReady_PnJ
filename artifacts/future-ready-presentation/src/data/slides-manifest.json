@@ -1,0 +1,50 @@
+[
+  {
+    "id": "4e648dd8-2f29-4dcf-a3fd-44204c23cc01",
+    "position": 1,
+    "filepath": "src/pages/slides/FutureReadyCover.tsx",
+    "title": "FutureReady",
+    "description": "A practical career-planning prototype for the AI era",
+    "speakerNotes": ""
+  },
+  {
+    "id": "4e648dd8-2f29-4dcf-a3fd-44204c23cc02",
+    "position": 2,
+    "filepath": "src/pages/slides/CareerPlanningQuestion.tsx",
+    "title": "The career-planning question",
+    "description": "The questions the FutureReady profile helps explore",
+    "speakerNotes": ""
+  },
+  {
+    "id": "4e648dd8-2f29-4dcf-a3fd-44204c23cc03",
+    "position": 3,
+    "filepath": "src/pages/slides/BuildYourProfile.tsx",
+    "title": "Build a profile that reflects you",
+    "description": "The skills and goals used to personalize guidance",
+    "speakerNotes": ""
+  },
+  {
+    "id": "4e648dd8-2f29-4dcf-a3fd-44204c23cc04",
+    "position": 4,
+    "filepath": "src/pages/slides/ProfileToPlan.tsx",
+    "title": "Turn a profile into a plan",
+    "description": "Career comparisons, learning roadmaps, and SDG mappings",
+    "speakerNotes": ""
+  },
+  {
+    "id": "4e648dd8-2f29-4dcf-a3fd-44204c23cc05",
+    "position": 5,
+    "filepath": "src/pages/slides/ReadSignals.tsx",
+    "title": "Read signals with context",
+    "description": "How to interpret synthetic examples and external signals",
+    "speakerNotes": ""
+  },
+  {
+    "id": "4e648dd8-2f29-4dcf-a3fd-44204c23cc06",
+    "position": 6,
+    "filepath": "src/pages/slides/SafePrototype.tsx",
+    "title": "A safe prototype, with clear next steps",
+    "description": "Current AI safety boundary and recommended next steps",
+    "speakerNotes": ""
+  }
+]
