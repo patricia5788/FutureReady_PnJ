@@ -23,7 +23,7 @@
 | Replit Project | https://replit.com/@patriciacheng07/FutureReady-AI |
 | **Live Demo** | **https://future-ready-pnj.replit.app** |
 | Canva Slide Deck | https://canva.link/lbriuzhirsx7dlj |
-| Pitching Video (5–7 minutes, including prototype demo) | **YouTube link outstanding** |
+| Pitching Video (5–7 minutes, including prototype demo) | https://youtu.be/TagOoGaiiLw |
 
 > **For judges:** The prototype is published on Replit and its live URL returned HTTP 200 on 24 October 2026. Optional paid AI inference is disabled in the public demo; the core skills, career-matching, learning-roadmap, SDG, and scenario features remain available. This check does not replace a full browser or production-data test.
 
