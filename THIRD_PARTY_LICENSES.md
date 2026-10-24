@@ -130,10 +130,6 @@ Scope limitation: the lockfile may contain optional or platform-specific package
 | @radix-ui/react-use-size | 1.1.4 | MIT |
 | @radix-ui/react-visually-hidden | 1.2.11 | MIT |
 | @radix-ui/rect | 1.1.3 | MIT |
-| @replit/connectors-sdk | 0.4.3 | UNDECLARED |
-| @replit/vite-plugin-cartographer | 0.5.21 | UNDECLARED |
-| @replit/vite-plugin-dev-banner | 0.1.2 | UNDECLARED |
-| @replit/vite-plugin-runtime-error-modal | 0.0.6 | UNDECLARED |
 | @rolldown/pluginutils | 1.0.0-rc.3 | MIT |
 | @rollup/rollup-linux-x64-gnu | 4.63.1 | MIT |
 | @scalar/helpers | 0.10.0 | MIT |
