@@ -1,4 +1,4 @@
-# PivotPath
+# FutureReady
 
 > **An AI career-pivot and reskilling guide for the AI era, helping IT graduates identify transferable skills, explore suitable careers, and plan their next learning steps.**
 
