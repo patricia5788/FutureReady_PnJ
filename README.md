@@ -19,7 +19,7 @@
 
 | Resource | Link |
 | --- | --- |
-| GitHub Repository | https://github.com/patricia5788/FutureReady-AI |
+| GitHub Repository | https://github.com/patricia5788/FutureReady_PnJ |
 | Replit Project | https://replit.com/@patriciacheng07/FutureReady-AI |
 | **Live Demo** | **https://future-ready-pnj.replit.app** |
 | Slide Deck | https://www.canva.com/design/DAHY0HTktfI/pwP9jJQ4hNrNyMCeQAuHrw/edit |
