@@ -19,10 +19,10 @@
 
 | Resource | Link |
 | --- | --- |
-| GitHub Repository | https://github.com/patricia5788/FutureReady_PnJ — public access not verified |
+| GitHub Repository | https://github.com/patricia5788/FutureReady_PnJ  |
 | Replit Project | https://replit.com/@patriciacheng07/FutureReady-AI |
-| **Live Demo** | **https://future-ready-pnj.replit.app** — returned HTTP 200 on 24 October 2026; this does not verify every feature or the production database |
-| Canva Slide Deck | [Existing editor link](https://www.canva.com/design/DAHY0HTktfI/pwP9jJQ4hNrNyMCeQAuHrw/edit) — judge-view link and access are not verified |
+| **Live Demo** | **https://future-ready-pnj.replit.app** |
+| Canva Slide Deck | https://canva.link/lbriuzhirsx7dlj |
 | Pitching Video (5–7 minutes, including prototype demo) | **YouTube link outstanding** |
 
 > **For judges:** The prototype is published on Replit and its live URL returned HTTP 200 on 24 October 2026. Optional paid AI inference is disabled in the public demo; the core skills, career-matching, learning-roadmap, SDG, and scenario features remain available. This check does not replace a full browser or production-data test.
