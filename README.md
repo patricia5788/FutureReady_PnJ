@@ -21,9 +21,9 @@
 | --- | --- |
 | GitHub Repository | https://github.com/patricia5788/FutureReady-AI |
 | Replit Project | https://replit.com/@patriciacheng07/FutureReady-AI |
-| Live Demo | [Add deployed public URL after publishing] |
+| Live Demo | https://future-ready-PnJ.replit.app |
 | RunPod Endpoint | `https://api.runpod.ai/v2/glhbbue9orpxzb` (API endpoint; requires authentication) |
-| Slide Deck | [Add slide deck link] |
+| Slide Deck | https://www.canva.com/design/DAHY0HTktfI/pwP9jJQ4hNrNyMCeQAuHrw/edit |
 | Demo Video | [Add video link] |
 
 ---
@@ -239,23 +239,23 @@ curl -X POST "https://api.runpod.ai/v2/$RUNPOD_ENDPOINT_ID/run" \
 
 | Name | Role | GitHub |
 | --- | --- | --- |
-| [Member 1 — to fill in] | [Role — to fill in] | [GitHub — to fill in] |
-| [Member 2 — to fill in] | [Role — to fill in] | [GitHub — to fill in] |
+| Jessy Chia Jiek Xin | Team Lead | [GitHub — to fill in] |
+| Patricia Cheng Jing Xuan | Technical/ AI Integration | @patricia5788 |
 
 ---
 
 ## Submission Checklist
 
 - [x] Team name, domain and primary SDG track filled in
-- [ ] Slide deck link added
+- [/] Slide deck link added
 - [ ] Demo video link added
-- [ ] Replit used, with proof of use in `submission/`
-- [ ] RunPod used, with proof of use in `submission/`
+- [/] Replit used, with proof of use in `submission/`
+- [/] RunPod used, with proof of use in `submission/`
 - [ ] Preliminary submission completed (`SDC2026_PnJ_Preliminary.pdf`)
 - [ ] Technology declaration completed (`SDC2026_PnJ_TechDeclaration.pdf`)
-- [ ] Submission files renamed with team name **PnJ**
-- [ ] "How to Run" steps verified on the final submission environment
-- [ ] Final secret scan confirmed before switching the repository to Public
+- [/] Submission files renamed with team name **PnJ**
+- [/] "How to Run" steps verified on the final submission environment
+- [/] Final secret scan confirmed before switching the repository to Public
 - [ ] Public demo and GitHub access verified for judges
 
 ## License
