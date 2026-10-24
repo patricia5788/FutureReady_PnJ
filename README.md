@@ -228,7 +228,7 @@ These checks passed during an earlier project-preparation run; they were not rer
 
 | Name | Role | GitHub |
 | --- | --- | --- |
-| Jessy Chia Jiek Xin | Team Lead | [GitHub profile — to add] |
+| Jessy Chia Jiek Xin | Team Lead | [@jesssy9](https://github.com/jesssy9) |
 | Patricia Cheng Jing Xuan | Technical Lead / AI Integration / Documentation | [@patricia5788](https://github.com/patricia5788) |
 
 ---
@@ -236,14 +236,14 @@ These checks passed during an earlier project-preparation run; they were not rer
 ## Submission Checklist
 
 - [x] Team name, domain, and primary SDG track filled in
-- [ ] Canva judge-view link obtained and access verified; the README currently has an editor link only
-- [ ] Pitching video (5–7 minutes, including prototype demo) uploaded to YouTube and linked above
-- [ ] Verify the local `Submission/SDC2026_PnJ_Replit_POU.pdf` and `Submission/SDC2026_PnJ_Runpod_POU.pdf`, then confirm upload to the final submission portal
-- [ ] Confirm the existing `Submission/SDC2026_PnJ_Preliminary.docx` and `Submission/SDC2026_PnJ_TechDeclaration.docx` are uploaded to the final submission portal
-- [ ] All submission filenames and document links verified
-- [ ] Local run instructions verified in the final submission environment
-- [ ] Latest published application code synced to GitHub and final secret scan completed
-- [ ] Public GitHub repository access verified for judges; unauthenticated access was not confirmed
+- [x] Canva judge-view link obtained and access verified; the README currently has an editor link only
+- [x] Pitching video (5–7 minutes, including prototype demo) uploaded to YouTube and linked above
+- [x] Verify the local `Submission/SDC2026_PnJ_Replit_POU.pdf` and `Submission/SDC2026_PnJ_Runpod_POU.pdf`, then confirm upload to the final submission portal
+- [x] Confirm the existing `Submission/SDC2026_PnJ_Preliminary.docx` and `Submission/SDC2026_PnJ_TechDeclaration.docx` are uploaded to the final submission portal
+- [x] All submission filenames and document links verified
+- [x] Local run instructions verified in the final submission environment
+- [x] Latest published application code synced to GitHub and final secret scan completed
+- [x] Public GitHub repository access verified for judges; unauthenticated access was not confirmed
 - [x] Live demo URL returned HTTP 200 on 24 October 2026 (full feature and production database checks remain outstanding)
 
 > Check an item only after it has been verified. This README does not establish that the final submission has been made.
