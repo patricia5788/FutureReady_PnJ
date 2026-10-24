@@ -1,8 +1,0 @@
-uploads = []
-generated = []
-
-[[outputs]]
-id = "ECR10OGvFx3on3cfn81xm"
-uri = "file://.local/outputs/FutureReady---SDC-Hackathon-2026.pdf"
-type = "pdf"
-title = "FutureReady — SDC Hackathon 2026.pdf"

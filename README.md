@@ -48,11 +48,13 @@ FutureReady's primary intended alignment is **SDG 4**, particularly employment-r
 The application contains six main pages:
 
 1. **Home** — Overview and entry point for career exploration.
-2. **My Skills Profile** — Enter skills, proficiency levels, education, experience, interests, and goals; profile data is saved in browser `localStorage`.
-3. **Career Matches** — Compare skills with five curated pathways, view explainable match scores, and identify gaps. Scores are **catalogue-alignment measures, not hiring probabilities**.
-4. **My Learning Roadmap** — Follow ordered learning steps, explore curated free or low-cost resources, and track progress in browser `localStorage`.
-5. **SDG Mapping** — Explore possible connections between learning, career readiness, and SDGs 4, 8, and 9.
+2. **My Skills Profile** — Enter skills, proficiency levels, experience, interests, and goals; profile data is saved in browser `localStorage`.
+3. **Future Skills Radar** — Compare saved profile skills with clearly labelled synthetic skill scores.
+4. **Career Matches** — Compare skills with curated pathways, view explainable match scores, and identify gaps. Scores are **catalogue-alignment measures, not hiring probabilities**.
+5. **My Learning Roadmap** — Follow ordered learning steps, explore curated free or low-cost resources, and track progress in browser `localStorage`.
 6. **AI Trends & Scenarios** — Review dated research cards, illustrative Remotive listings, and two team-defined AI adoption scenarios; optional RunPod-powered insights are disabled in the public demo.
+
+SDG Mapping is available as a supporting page linked from relevant career and learning views.
 
 **Important limitations:** The adoption scenarios are illustrations, not predictions. Remotive listings are delayed individual examples, not representative vacancy statistics. FutureReady does not train or fine-tune its own AI model.
 
@@ -79,7 +81,7 @@ The application contains six main pages:
 This is a **TypeScript/pnpm monorepo**. The application source remains in its existing directories; it has **not** been moved into a new top-level `src/` folder merely to match the generic hackathon template.
 
 ```text
-FutureReady-AI/
+FutureReady_PnJ/
 ├── artifacts/
 │   ├── future-ready-ai/       # React/Vite web app
 │   ├── api-server/            # Express API, Remotive and RunPod integrations
@@ -128,7 +130,7 @@ The career-match score comes from structured rules, **not** the generative model
 
 ### Option 1 — Replit (Recommended)
 
-1. Open the [Replit project](https://replit.com/@patriciacheng07/FutureReady-AI) or import the [GitHub repository](https://github.com/patricia5788/FutureReady-AI) into Replit.
+1. Open the [Replit project](https://replit.com/@patriciacheng07/FutureReady-AI) or import the [GitHub repository](https://github.com/patricia5788/FutureReady_PnJ) into Replit.
 2. Use the project's **pnpm** workspace configuration to install dependencies.
 3. Configure the required environment variables, including `DATABASE_URL`, through Replit Secrets. Provision and initialise PostgreSQL for the AI job-tracking schema.
 4. Run the configured Replit project workflow and open the app preview.
@@ -141,8 +143,8 @@ The publicly deployed prototype is available at **https://future-ready-pnj.repli
 Prerequisites: compatible Node.js, pnpm, and a configured PostgreSQL database. The reviewed development runtime used Node.js 24.13.0 and pnpm 10.26.1.
 
 ```bash
-git clone https://github.com/patricia5788/FutureReady-AI.git
-cd FutureReady-AI
+git clone https://github.com/patricia5788/FutureReady_PnJ.git
+cd FutureReady_PnJ
 pnpm install
 
 # Configure DATABASE_URL locally; never commit real secret values.
@@ -154,7 +156,7 @@ pnpm --filter @workspace/api-server run dev
 pnpm --filter @workspace/future-ready-ai run dev
 ```
 
-> **Verification note:** These commands reflect the package scripts, but a complete local end-to-end startup has not been independently verified. The separate `mockup-sandbox` artifact requires its own environment settings, so the root `pnpm run build` should not be presented as a universally verified one-command build.
+> **Verification note:** The workspace TypeScript checks and the FutureReady frontend and API production builds were run during this preparation. These checks do not replace a browser end-to-end test, production database verification, or external-service checks.
 
 ### Type Checks and Builds
 
@@ -164,7 +166,7 @@ pnpm --filter @workspace/future-ready-ai run build
 pnpm --filter @workspace/api-server run build
 ```
 
-These checks passed in the reported pre-publish review. They are not a substitute for browser-based end-to-end tests, production database verification, or external-service checks.
+These checks passed during the current preparation. They are not a substitute for browser-based end-to-end tests, production database verification, or external-service checks.
 
 ---
 
@@ -197,7 +199,7 @@ These checks passed in the reported pre-publish review. They are not a substitut
 - **GPU cost control:** Added a server-side opt-in flag to prevent uncontrolled public RunPod submissions.
 - **Asynchronous inference:** Implemented job tracking and polling rather than assuming every GPU request finishes immediately.
 - **Responsible interpretation:** Clearly labelled career-match scores, job samples, SDG mappings, and AI-adoption scenarios with their limitations.
-- **Dependency security:** Updated vulnerable dependencies before publishing. The last reported audit had **0 critical, 1 high, and 1 moderate** advisory; the remaining high finding was in separate mockup development tooling, and the moderate finding was in build-time CSS tooling. This is not a claim that the dependency tree is vulnerability-free.
+- **Dependency security:** The latest preparation audit reports one high advisory in Zod (the current v3 validation dependency; the patched release is v4.6.6 or later, so upgrading requires a major-version compatibility review) and one moderate advisory in `postcss-selector-parser` (frontend build tooling pinned by the current typography package). Compatible updates were applied to `body-parser`, `fast-uri`, and `prosemirror-view`. Re-run the audit before release; a successful build does not prove the dependency tree is vulnerability-free.
 
 ## Future Improvements
 
@@ -237,4 +239,4 @@ These checks passed in the reported pre-publish review. They are not a substitut
 
 ## License
 
-This repository includes an [Apache License 2.0](LICENSE) file. The root package metadata previously declared MIT; reconcile that metadata with the intended project license before making a final repository-wide license claim.
+This repository is licensed under the [Apache License 2.0](LICENSE).

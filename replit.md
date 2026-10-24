@@ -1,54 +1,38 @@
 # FutureReady
 
-FutureReady is a beginner-friendly career exploration dashboard with a locally saved skills profile and clearly labeled synthetic examples.
+FutureReady is a career-exploration prototype for students, graduates, and working adults. Career guidance and sample trends are clearly identified as illustrative, not validated predictions.
 
-## Run & Operate
+## Architecture
 
-- `pnpm --filter @workspace/future-ready-ai run dev` — run the FutureReady web app
-- `pnpm --filter @workspace/future-ready-ai run typecheck` — check the web app's TypeScript
-- `pnpm --filter @workspace/future-ready-ai run build` — create a production build
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
-- `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- **Frontend:** React, TypeScript, Vite, and Tailwind CSS in `artifacts/future-ready-ai`.
+- **API:** Node.js and Express in `artifacts/api-server`.
+- **Database:** PostgreSQL with Drizzle ORM stores asynchronous AI insight job-tracking data; it does not store the full skills profile.
+- **Profile and roadmap progress:** Saved in browser `localStorage`.
+- **Career guidance:** Explainable, rule-based career matching and skill-gap analysis.
+- **Market examples:** Remotive API job-listing examples are fetched and cached by the backend; they are not vacancy totals or verified demand statistics.
+- **Optional AI:** Backend-mediated RunPod Serverless inference using Qwen/Qwen3-4B-Instruct-2507. `RUNPOD_AI_ENABLED` must be explicitly set to `true`; otherwise inference is disabled. Keep RunPod credentials server-side.
 
-## Stack
+## Run and check
 
-- pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- `pnpm --filter @workspace/future-ready-ai run dev` — run the web app.
+- `pnpm --filter @workspace/api-server run dev` — run the API server.
+- `pnpm --filter @workspace/future-ready-ai run typecheck` — check frontend TypeScript.
+- `pnpm --filter @workspace/api-server run typecheck` — check API TypeScript.
+- `pnpm run typecheck` — check all workspace projects.
+- `PORT=21019 BASE_PATH=/ pnpm --filter @workspace/future-ready-ai run build` — build the frontend.
+- `pnpm --filter @workspace/api-server run build` — build the API.
+- `pnpm --filter @workspace/db run push` — development database schema push only; review database changes before running.
 
-## Where things live
+Configure `DATABASE_URL` through Replit Secrets for the API. Do not put credentials in source files or browser code.
 
-- `artifacts/future-ready-ai/src/App.tsx` — app routes, shared navigation, six page views, and synthetic sample content
-- `artifacts/future-ready-ai/src/lib/skill-comparison.ts` — exact-name skill comparison and practice-flag rules
-- `artifacts/future-ready-ai/src/index.css` — shared theme, layout, and responsive styles
-- `artifacts/future-ready-ai/package.json` — app commands and dependencies
+## Pages and data limits
 
-## Architecture decisions
+The six main pages are Home, My Skills Profile, Future Skills Radar, Career Matches, My Learning Roadmap, and AI Trends & Scenarios. SDG Mapping is also available as a supporting page.
 
-- The first version is frontend-only. The skills profile is saved in the browser with localStorage; no login, database, API key, or external service is needed.
-- Career scores, skill trends, recommendations, learning estimates, and AI-adoption comparisons are synthetic examples, not verified forecasts or labor-market statistics.
-- Profile comparison ignores capitalization and repeated spaces, but does not guess synonyms; low proficiency flags are simple organizing rules, not a validated assessment.
+Profile-to-skill and career comparisons use the saved browser profile and explicit rules. Radar scores, career catalogues, learning-time estimates, and moderate/fast AI adoption scenarios are synthetic or team-defined examples, not verified labor-market facts or predictions.
 
-## Product
+## Project conventions
 
-The app helps users explore a skills profile, compare saved skills with illustrative future skill trends, browse career matches, follow an example learning roadmap, and compare moderate versus fast AI-adoption scenarios.
-
-## User preferences
-
-- Keep the first version simple enough for programming beginners to understand and maintain.
-- Use clearly labeled synthetic sample data; do not present sample trends, job statistics, or recommendations as verified facts.
-
-## Gotchas
-
-_Populate as you build — sharp edges, "always run X before Y" rules._
-
-## Pointers
-
-- See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details
+- Use `pnpm` for workspace package management.
+- Keep application routes, profile storage keys, and artifact paths stable unless explicitly asked to change them.
+- The user-facing application name is **FutureReady**.

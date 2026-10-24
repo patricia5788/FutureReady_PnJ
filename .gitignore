@@ -47,6 +47,7 @@ Thumbs.db
 # Replit
 .cache/
 .local/
+.agents/agent_assets_metadata.toml
 
 # Local environment files (keep the checked-in template)
 .env
