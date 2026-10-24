@@ -19,13 +19,13 @@
 
 | Resource | Link |
 | --- | --- |
-| GitHub Repository | https://github.com/patricia5788/FutureReady_PnJ |
+| GitHub Repository | https://github.com/patricia5788/FutureReady_PnJ — public access not verified |
 | Replit Project | https://replit.com/@patriciacheng07/FutureReady-AI |
-| **Live Demo** | **https://future-ready-pnj.replit.app** |
-| Slide Deck | https://www.canva.com/design/DAHY0HTktfI/pwP9jJQ4hNrNyMCeQAuHrw/edit |
-| Pitching Video (5–7 minutes, including prototype demo) | **[YouTube link — to add]** |
+| **Live Demo** | **https://future-ready-pnj.replit.app** — returned HTTP 200 on 24 October 2026; this does not verify every feature or the production database |
+| Canva Slide Deck | [Existing editor link](https://www.canva.com/design/DAHY0HTktfI/pwP9jJQ4hNrNyMCeQAuHrw/edit) — judge-view link and access are not verified |
+| Pitching Video (5–7 minutes, including prototype demo) | **YouTube link outstanding** |
 
-> **For judges:** The live prototype has been published on Replit. Optional paid AI inference is disabled in the public demo; the core skills, career-matching, learning-roadmap, SDG, and scenario features remain available. Please verify live access before the final submission.
+> **For judges:** The prototype is published on Replit and its live URL returned HTTP 200 on 24 October 2026. Optional paid AI inference is disabled in the public demo; the core skills, career-matching, learning-roadmap, SDG, and scenario features remain available. This check does not replace a full browser or production-data test.
 
 ---
 
@@ -76,6 +76,17 @@ SDG Mapping is available as a supporting page linked from relevant career and le
 
 ---
 
+## Data Sources and Third-Party Attribution
+
+- **O*NET:** The five pathways are team-curated using linked [O*NET OnLine references](https://www.onetonline.org/): [Software Developers](https://www.onetonline.org/link/summary/15-1252.00), [Data Scientists](https://www.onetonline.org/link/summary/15-2051.00), [Information Security Analysts](https://www.onetonline.org/link/summary/15-1212.00), and the [O*NET Career Finder](https://www.onetonline.org/find/career?c=060100). Some skill descriptions are summarized or adapted from those references; pathway levels and rationales are team-defined. Review of the local career-skills CSV and runtime catalog did not establish that a versioned O*NET Database was downloaded or copied, and did not establish the provenance of every phrase. No O*NET database version is claimed. O*NET OnLine content is generally available under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), subject to its [license exceptions](https://www.onetonline.org/help/license); attribution must credit O*NET OnLine and the U.S. Department of Labor, Employment and Training Administration (USDOL/ETA), link the license, and identify changes. O*NET® is a trademark of USDOL/ETA, which has not approved or endorsed FutureReady.
+- **ESCO:** The cloud-computing skill references the European Commission’s [ESCO classification](https://ec.europa.eu/esco). This service uses the ESCO classification of the European Commission. FutureReady’s cloud/network pathway is team-curated and adapted; it is not an official ESCO occupation. See the [ESCO reuse conditions](https://esco.ec.europa.eu/en/about-esco/faq), which require this acknowledgement for services using ESCO and require adaptations to be identified.
+- **Remotive:** Illustrative listings come from the [Remotive Remote Jobs Public API](https://remotive.com/remote-jobs/api). The UI credits Remotive and links each listing to its original Remotive URL, as required by the [API terms](https://remotive.com/remote-jobs/api). Remotive says listings are delayed by about 24 hours.
+- **Qwen:** Optional hosted inference uses [Qwen/Qwen3-4B-Instruct-2507](https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507), whose model card identifies its license as [Apache-2.0](https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507/blob/main/LICENSE). The model is served through RunPod; the model weights are not included in this repository.
+- **Google Fonts:** The frontend loads [DM Sans](https://fonts.google.com/specimen/DM+Sans) and [Fraunces](https://fonts.google.com/specimen/Fraunces) from Google Fonts. This is an external browser resource. Both font families are distributed under the [SIL Open Font License 1.1](https://openfontlicense.org/); see the [DM Sans](https://github.com/google/fonts/blob/main/ofl/dmsans/OFL.txt) and [Fraunces](https://github.com/google/fonts/blob/main/ofl/fraunces/OFL.txt) notices.
+- **Dependency license inventory:** See [`THIRD_PARTY_LICENSES.md`](THIRD_PARTY_LICENSES.md) for a preliminary package license metadata inventory, not a complete legal clearance. It includes two nested test-fixture manifests (`benchmarks` and `transport`) that are not lockfile dependencies. Four Replit packages have no declared license in the metadata or local package files reviewed: `@replit/connectors-sdk`, `@replit/vite-plugin-cartographer`, `@replit/vite-plugin-dev-banner`, and `@replit/vite-plugin-runtime-error-modal`. Their applicable terms remain unverified; the inventory must not be read as confirming those packages are licensed for use.
+
+---
+
 ## Project Structure
 
 This is a **TypeScript/pnpm monorepo**. The application source remains in its existing directories; it has **not** been moved into a new top-level `src/` folder merely to match the generic hackathon template.
@@ -94,6 +105,7 @@ FutureReady_PnJ/
 ├── scripts/                  # Development and security-check scripts
 ├── Submission/               # Competition documents and proof of use
 ├── README.md                 # This document, at repository root
+├── THIRD_PARTY_LICENSES.md    # Preliminary dependency license metadata inventory
 ├── LICENSE                   # Apache License 2.0
 ├── SECURITY.md               # Security guidance
 ├── .gitignore
@@ -156,7 +168,7 @@ pnpm --filter @workspace/api-server run dev
 pnpm --filter @workspace/future-ready-ai run dev
 ```
 
-> **Verification note:** The workspace TypeScript checks and the FutureReady frontend and API production builds were run during this preparation. These checks do not replace a browser end-to-end test, production database verification, or external-service checks.
+> **Verification note:** The workspace TypeScript checks and the FutureReady frontend and API production builds passed during an earlier project-preparation run. They were not rerun for this documentation-only update and do not replace a browser end-to-end test, production database verification, or external-service checks.
 
 ### Type Checks and Builds
 
@@ -166,7 +178,7 @@ pnpm --filter @workspace/future-ready-ai run build
 pnpm --filter @workspace/api-server run build
 ```
 
-These checks passed during the current preparation. They are not a substitute for browser-based end-to-end tests, production database verification, or external-service checks.
+These checks passed during an earlier project-preparation run; they were not rerun for this documentation-only update. They are not a substitute for browser-based end-to-end tests, production database verification, or external-service checks.
 
 ---
 
@@ -176,9 +188,9 @@ These checks passed during the current preparation. They are not a substitute fo
 - **Replit Agent:** Assisted implementation, iteration, debugging, and presentation preparation; the team reviewed and directed the work.
 - **Hosting:** The public prototype is deployed at [future-ready-pnj.replit.app](https://future-ready-pnj.replit.app).
 - **Secrets:** RunPod credentials and database connection settings are managed server-side rather than embedded in the public frontend.
-- **Sponsor resources:** Official sponsor-provided Replit credits were used for the hackathon project, as declared by the team.
+- **Sponsor resources:** Official sponsor-provided Replit credits were used for this project.
 
-**Proof of use:** Place the Replit workspace and usage screenshots in `Submission/` and link their final filenames here once uploaded.
+**Proof of use:** Local files `Submission/SDC2026_PnJ_Replit_POU.pdf` and `Submission/SDC2026_PnJ_Runpod_POU.pdf` are present. Verify their contents and confirm whether they have been uploaded to the final submission portal; external upload status is not verified.
 
 ## How We Use RunPod *(Required)*
 
@@ -187,9 +199,9 @@ These checks passed during the current preparation. They are not a substitute fo
 - **Integration:** The Express backend sends authenticated inference jobs and polls for results; PostgreSQL records job-tracking status and outputs.
 - **Validation:** An end-to-end inference test was completed during development; the provider's current availability is not guaranteed by that test.
 - **Public safety:** The server-side `RUNPOD_AI_ENABLED` flag defaults to off, so public users cannot trigger new GPU inference jobs while the feature remains disabled.
-- **Sponsor resources:** Official sponsor-provided RunPod credits were used for integration and inference testing, as declared by the team.
+- **Sponsor resources:** Official sponsor-provided RunPod credits were used for integration and inference testing.
 
-**Proof of use:** Place the RunPod endpoint overview and Serverless billing/usage screenshots in `Submission/` and link their final filenames here once uploaded. Do not expose API keys, payment information, or private request content.
+**Proof of use:** The local RunPod proof-of-use PDF is `Submission/SDC2026_PnJ_Runpod_POU.pdf`. Verify its contents and confirm whether it has been uploaded to the final submission portal; external upload status is not verified. Do not expose API keys, payment information, or private request content.
 
 ---
 
@@ -224,16 +236,15 @@ These checks passed during the current preparation. They are not a substitute fo
 ## Submission Checklist
 
 - [x] Team name, domain, and primary SDG track filled in
-- [x] Slide deck link included (verify judge viewing permissions)
+- [ ] Canva judge-view link obtained and access verified; the README currently has an editor link only
 - [ ] Pitching video (5–7 minutes, including prototype demo) uploaded to YouTube and linked above
-- [ ] Replit proof-of-use files uploaded to `Submission/` and linked above
-- [ ] RunPod proof-of-use files uploaded to `Submission/` and linked above
-- [ ] Preliminary proposal uploaded with team name `PnJ` in its filename
-- [ ] Technical & Tools Declaration uploaded with team name `PnJ` in its filename
+- [ ] Verify the local `Submission/SDC2026_PnJ_Replit_POU.pdf` and `Submission/SDC2026_PnJ_Runpod_POU.pdf`, then confirm upload to the final submission portal
+- [ ] Confirm the existing `Submission/SDC2026_PnJ_Preliminary.docx` and `Submission/SDC2026_PnJ_TechDeclaration.docx` are uploaded to the final submission portal
 - [ ] All submission filenames and document links verified
 - [ ] Local run instructions verified in the final submission environment
 - [ ] Latest published application code synced to GitHub and final secret scan completed
-- [ ] Public GitHub repository and live demo access verified for judges
+- [ ] Public GitHub repository access verified for judges; unauthenticated access was not confirmed
+- [x] Live demo URL returned HTTP 200 on 24 October 2026 (full feature and production database checks remain outstanding)
 
 > Check an item only after it has been verified. This README does not establish that the final submission has been made.
 

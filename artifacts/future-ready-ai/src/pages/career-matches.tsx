@@ -46,6 +46,10 @@ export function CareerMatchesPage({ profile, onSave }: { profile: Profile; onSav
           </div>
         </div>
       </section>
+      <p className="text-[10px] text-[hsl(var(--muted-foreground))] mb-5" data-testid="esco-attribution">
+        This service uses the <SourceLink href="https://ec.europa.eu/esco">ESCO classification</SourceLink> of the European Commission.
+        FutureReady’s cloud/network pathway is a team-curated adaptation, not an official ESCO occupation.
+      </p>
 
       {!hasSkills ? (
         <EmptyProfileCard>

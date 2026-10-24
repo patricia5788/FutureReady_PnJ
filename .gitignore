@@ -48,6 +48,9 @@ Thumbs.db
 .cache/
 .local/
 .agents/agent_assets_metadata.toml
+# Keep local agent memory in the workspace, not in commits.
+.agents/memory/MEMORY.md
+.agents/memory/future-ready-sponsor-credits.md
 
 # Local environment files (keep the checked-in template)
 .env

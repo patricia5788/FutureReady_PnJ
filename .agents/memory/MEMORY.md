@@ -1,2 +1,0 @@
-- [Vite artifact build environment](vite-artifact-build-env.md) — direct builds need the artifact's required `PORT` and `BASE_PATH` values.
-- [FutureReady product name](future-ready-brand.md) — the user confirmed the final user-facing app name is FutureReady, without “AI”.
